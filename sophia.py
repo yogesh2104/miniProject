@@ -8,8 +8,8 @@ import os
 
 assistant = pyttsx3.init('sapi5')
 voices = assistant.getProperty('voices')
-# print(voices[1].id)
-assistant.setProperty('voice', voices[0].id)
+# print(voices)
+assistant.setProperty('voice', voices[2].id)
 
 
 def speak(audio):
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     while True:
         query = takeCommand().lower()
         # Logic for executing tasks based on query
-        
+         
         if "hello" in query:
             speak("hello sir how can i help.")
         elif "how are you" in query:
