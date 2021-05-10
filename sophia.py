@@ -3,7 +3,7 @@ import speech_recognition as sr #pip install speechRecognition
 import datetime
 import time
 import wikipedia #pip install wikipedia
-# import webbrowser
+import webbrowser
 import os
 
 assistant = pyttsx3.init('sapi5')
@@ -16,11 +16,10 @@ def speak(audio):
     assistant.say(audio)
     assistant.runAndWait()
 
-def takeCommand():
+def recognize():
     command = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
-        # print(sr.Mircrophone.list_microphone_name()) # also pass device_index=1,2,3,0 etc
         command.pause_threshold = 1
         audio = command.listen(source)
 
@@ -33,15 +32,11 @@ def takeCommand():
         print("Say that again please...")  
         return "None"
     return query
+# print(sr.Microphone.list_microphone_names()) # also pass device_index=1,2,3,0 etc
 
 
     
 def startup():
-    speak("Initializing Sophia")
-    speak("Starting all systems applications")
-    speak("Installing and checking all drivers")
-    speak("Checking the internet connection")
-    speak("All drivers are up and running")
     speak("All systems have been activated")
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<=12:
@@ -50,15 +45,15 @@ def startup():
         speak("Good afternoon")
     else:
         speak("Good evening")
-    strTime  =datetime.datetime.now().strftime('%H:%M:%S')
+    strTime = datetime.datetime.now().strftime('%H:%M:%S')
     speak(f"Currently it is {strTime}")
-    speak("I am Jarvis. Online and ready sir. Please tell me how may I help you")
+    speak("I am Nova. Online and ready sir. Please tell me how may I help you")
 
 
 if __name__ == "__main__":
-    startup()
+    # startup()
     while True:
-        query = takeCommand().lower()
+        query = recognize().lower()
         # Logic for executing tasks based on query
          
         if "hello" in query:
@@ -77,3 +72,15 @@ if __name__ == "__main__":
             speak("According to Wikipedia")
             print(results)
             speak(results)
+        elif "open youtube" in query:
+            speak("Opening youtube")
+            webbrowser.open("www.youtube.com")
+        elif "open google" in query:
+            speak("Opening google")
+            webbrowser.open("www.google.com")
+        elif "open github" in query:
+            speak("Opening github")
+            webbrowser.open("www.github.com")
+        elif "time" in query:
+            strTime = datetime.datetime.now().strftime('%H:%M:%S')
+            speak(f"Currently it is {strTime}")
