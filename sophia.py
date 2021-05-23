@@ -9,7 +9,7 @@ import os
 assistant = pyttsx3.init('sapi5')
 voices = assistant.getProperty('voices')
 # print(voices)
-assistant.setProperty('voice', voices[2].id)
+assistant.setProperty('voice', voices[1].id)
 
 
 def speak(audio):
@@ -52,7 +52,7 @@ def startup():
         speak("Good evening")
     strTime  =datetime.datetime.now().strftime('%H:%M:%S')
     speak(f"Currently it is {strTime}")
-    speak("I am Jarvis. Online and ready sir. Please tell me how may I help you")
+    speak("I am sophia. Online and ready sir. Please tell me how may I help you")
 
 
 if __name__ == "__main__":
@@ -85,7 +85,7 @@ if __name__ == "__main__":
                     speak(results)
                 except Exception as e:
                     print("Can not find result")
-                    speak("Canr not find result")
+                    speak("Can not find result")
             
             elif 'open youtube' in query:
                 speak("opening youtube")
