@@ -5,25 +5,32 @@ import time
 import wikipedia #pip install wikipedia
 import webbrowser
 import os
+import random
+from gyw import *
+
 
 assistant = pyttsx3.init('sapi5')
 voices = assistant.getProperty('voices')
-# print(voices)
+# print(voices[1].id)
 assistant.setProperty('voice', voices[1].id)
 
 
 def speak(audio):
+    """[summary]
+                The audio is that which you are speak take as string[str] and then speak 
+    Args:
+        audio ([str]]): [none]
+    """    
     assistant.say(audio)
     assistant.runAndWait()
 
-def takeCommand():
+def takeCommand():  
     command = sr.Recognizer()
+    # with sr.Microphone(device_index=1) as source:
     with sr.Microphone() as source:
         print("Listening...")
-        # print(sr.Mircrophone.list_microphone_name()) # also pass device_index=1,2,3,0 etc
         command.pause_threshold = 1
-        audio = command.listen(source)
-
+        audio = command.listen(source) 
     try:
         print("Recognizing...")    
         query = command.recognize_google(audio, language='en-in')
@@ -35,14 +42,13 @@ def takeCommand():
     return query
 
 
-    
 def startup():
+    """[startup] this function will start when the sophia is run every time."""    
     speak("Initializing Sophia")
-    # speak("Starting all systems applications")
+    speak("Starting all systems applications")
     speak("Installing and checking all drivers")
     speak("Checking the internet connection")
-    # speak("All drivers are up and running")
-    # speak("All systems have been activated")
+    speak("All systems have been activated")
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<=12:
         speak("Good Morning")
@@ -50,10 +56,9 @@ def startup():
         speak("Good afternoon")
     else:
         speak("Good evening")
-    strTime  =datetime.datetime.now().strftime('%H:%M:%S')
+    strTime = datetime.datetime.now().strftime('%H:%M:%S')
     speak(f"Currently it is {strTime}")
     speak("I am sophia. Online and ready sir. Please tell me how may I help you")
-
 
 if __name__ == "__main__":
     startup()
@@ -81,7 +86,6 @@ if __name__ == "__main__":
                     query = query.replace("wikipedia", "")
                     results = wikipedia.summary(query, sentences=2)
                     speak("According to Wikipedia")
-                    # print(results)
                     speak(results)
                 except Exception as e:
                     print("Can not find result")
@@ -135,18 +139,6 @@ if __name__ == "__main__":
                 speak("shutting down")
                 os.system('shutdown -s') 
             
-            elif "what\'s up" in query or 'how are you' in query:
-                stMsgs = ['Just doing my thing!', 'I am fine!', 'Nice!', 'I am nice and full of energy','i am okey ! How are you']
-                ans_q = random.choice(stMsgs)
-                speak(ans_q)  
-                ans_take = takeCommand()
-                
-                if 'fine' in ans_take or 'happy' in ans_take or 'okey' in ans_take:
-                    speak('okey..')  
-                
-                elif 'not' in ans_take or 'sad' in ans_take or 'upset' in ans_take:
-                    speak('oh sorry..')  
-            
             elif 'make you' in query or 'created you' in query or 'develop you' in query:
                 ans_m = " For your information Yogesh, Krishna and Gulsher !."
                 print(ans_m)
@@ -167,14 +159,44 @@ if __name__ == "__main__":
                 ex_exit = 'I feeling very sweet after meeting with you but you are going! i am very sad'
                 speak(ex_exit)
                 exit()    
-            else:
-                temp = query.replace(' ','+')
-                g_url="https://www.google.com/search?q="    
-                res_g = 'sorry! i cant understand but i search from internet to give your answer ! okay'
-                print(res_g)
-                speak(res_g)
-                webbrowser.open(g_url+temp)
-        
+            
+            elif 'open code' in query:
+                pass
+
+            elif "search on youtube" in query:
+                link = takeCommand()
+                link = link.replace("search",'')
+                link = link.replace("on","")
+                link = link.replace("youtube","")
+                YouTubeSearch(link)
+                speak("Enjoy!")
+
+            elif "google sesrch" in query:
+                pass
+
+            elif 'remember that' in query:
+                rememberMsg = query.replace("sophia",'')
+                rememberMsg = query.replace('remember that','')
+                speak("You tell me to remind you that" + rememberMsg)
+                remeber = open("C:\\Users\\Yogesh Singh\\Desktop\\miniproject\\Database\\data.txt")
+                remeber.write(rememberMsg)
+                remeber.close()
+
+
+            elif 'what you remember' in query:
+                remeber = open("C:\\Users\\Yogesh Singh\\Desktop\\miniproject\\Database\\data.txt")
+                speak(f"You tell me to remember is that {remeber.read()}")
+
+
+            elif 'temperature' in query:
+                import temperature
+                speak("city name please")
+                place = ("Temperature in ").takeCommand()
+                temperature(place)
+            
+
+            
+
         except Exception as e:
             print(e)
             speak("I cannot recognize ")
