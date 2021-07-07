@@ -6,6 +6,7 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import random
+import pywhatkit
 
 
 assistant = pyttsx3.init('sapi5')
@@ -59,6 +60,7 @@ def startup():
     speak(f"Currently it is {strTime}")
     speak("I am sophia. Online and ready sir. Please tell me how may I help you")
 
+        
 if __name__ == "__main__":
     # startup()
     while True:
@@ -94,38 +96,6 @@ if __name__ == "__main__":
                     print("Can not find result")
                     speak("Can not find result")
             
-            elif 'open youtube' in query:
-                speak("opening youtube")
-                webbrowser.open("youtube.com")
-            
-            elif 'open github' in query:
-                speak("opening github")  
-                webbrowser.open("https://www.github.com")
-           
-            elif 'open facebook' in query:
-                speak("opening facebook")      
-                webbrowser.open("https://www.facebook.com")
-            
-            elif 'open instagram' in query:
-                speak("opening instagram")    
-                webbrowser.open("https://www.instagram.com")
-            
-            elif 'open google' in query:
-                speak("opening google")
-                webbrowser.open("https://www.google.com")
-            
-            elif 'open yahoo' in query:
-                speak("opening yahoo")
-                webbrowser.open("https://www.yahoo.com")
-            
-            elif 'open gmail' in query:
-                speak("opening google mail") 
-                webbrowser.open("https://mail.google.com")
-                
-            elif 'open snapdeal' in query:
-                webbrowser.open("https://www.snapdeal.com") 
-                speak("opening snapdeal")  
-                
             elif 'open amazon' in query or 'shop online' in query:
                 webbrowser.open("https://www.amazon.com")
                 speak("opening amazon")
@@ -177,42 +147,54 @@ if __name__ == "__main__":
                 rand_song = random.randint(0, all_song-1)
                 os.startfile(os.path.join(music_folder,song[rand_song]))
 
- 
             elif "search on youtube" in query:
                 link = takeCommand()
-                link = link.replace("search",'')
-                link = link.replace("on","")
-                link = link.replace("youtube","")
-                from gyw import YouTubeSearch
-                YouTubeSearch(link)
-                speak("Enjoy!")
+                link = query.replace("search",'')
+                link = query.replace("on","")
+                link = query.replace("youtube","")
+                web = f"https://www.youtube.com/results?search_query={link}"
+                pywhatkit.playonyt(web)
+                speak("Enjoy!")    
 
-            elif "google sesrch" in query:
-                pass
+            elif "how to" in query:
+                from pywikihow import search_wikihow
+                import webbrowser as web
+                speak("Collecting data from the internet")
+                link = query.replace('sophia','')
+                link = query.replace('how to','')
+                link = query.replace('what is','')
+                link = query.replace('what do you mean by','')
+                max_result = 1
+                how_to = search_wikihow(link,max_result)
+                assert len(how_to) == 1
+                how_to[0].print()
+                speak(how_to[0].summary)
 
             elif 'remember that' in query:
-                rememberMsg = query.replace("sophia",'')
-                rememberMsg = query.replace('remember that','')
-                speak("You tell me to remind you that" + rememberMsg)
-                remeber = open("C:\\Users\\Yogesh Singh\\Desktop\\miniproject\\Database\\data.txt")
+                speak("What to remember")
+                rememberMsg =takeCommand()
+                # speak("You tell me to remind you that" + rememberMsg)
+                remeber = open("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\data.txt",'w')
                 remeber.write(rememberMsg)
                 remeber.close()
-
+                speak("Done")
 
             elif 'what you remember' in query:
-                remeber = open("C:\\Users\\Yogesh Singh\\Desktop\\miniproject\\Database\\data.txt")
+                remeber = open("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\data.txt")
                 speak(f"You tell me to remember is that {remeber.read()}")
 
-
             elif 'temperature' in query:
-                import temperature
-                speak("city name please")
-                place = ("Temperature in ").takeCommand()
-                temperature(place)
-            
-
-            
-
+                speak("Tell me the place name")
+                place_name =takeCommand() 
+                search=f"Temperature in {place_name}"
+                url = f"https://www.google.com/search?q={search}"
+                import requests
+                from bs4 import BeautifulSoup
+                r = requests.get(url)
+                data = BeautifulSoup(r.text,"html.parser")
+                temperature = data.find("div",class_="BNeawe").text
+                speak(f"Temperature is {temperature}")
+                print(f"Temperature is {temperature}")
         except Exception as e:
             print(e)
             speak("I cannot recognize ")
