@@ -6,7 +6,6 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import random
-from gyw import *
 
 
 assistant = pyttsx3.init('sapi5')
@@ -61,7 +60,7 @@ def startup():
     speak("I am sophia. Online and ready sir. Please tell me how may I help you")
 
 if __name__ == "__main__":
-    startup()
+    # startup()
     while True:
         try:
             query = takeCommand().lower()
@@ -79,6 +78,10 @@ if __name__ == "__main__":
             elif "bye" in query:
                 speak("bye sir, you can call me any time")
                 break
+
+            elif "time" in query:
+                strTime = datetime.datetime.now().strftime('%H:%M:%S')
+                speak(f"Currently it is {strTime}")
             
             elif 'wikipedia' in query:
                 try:
@@ -140,12 +143,13 @@ if __name__ == "__main__":
                 os.system('shutdown -s') 
             
             elif 'make you' in query or 'created you' in query or 'develop you' in query:
-                ans_m = " For your information Yogesh, Krishna and Gulsher !."
+                ans_m = " For your information Yogesh, Krishna and Gulsher Develop me!."
                 print(ans_m)
                 speak(ans_m)
             elif "who are you" in query or "about you" in query or "your details" in query:
                 about = "I am Sophia. I am computer based program but i can help you lot like a your close friend. Simple try me to give simple command ! I also play video and song from web or online. ok Lets Start "
                 speak(about)
+                print(about)
 
             elif "your name" in query or "sweat name" in query:
                 na_me = "Thanks for Asking my name my self ! Sophia."  
@@ -161,13 +165,25 @@ if __name__ == "__main__":
                 exit()    
             
             elif 'open code' in query:
-                pass
+                code_path = "C:\\Users\\Yogesh Singh\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                speak("Openning VSCODE")
+                os.startfile(code_path)
+            
+            elif 'play song' in query:
+                music_folder = "E:\\audios"
+                song = os.listdir(music_folder)
+                all_song=len(song)
+                import random
+                rand_song = random.randint(0, all_song-1)
+                os.startfile(os.path.join(music_folder,song[rand_song]))
 
+ 
             elif "search on youtube" in query:
                 link = takeCommand()
                 link = link.replace("search",'')
                 link = link.replace("on","")
                 link = link.replace("youtube","")
+                from gyw import YouTubeSearch
                 YouTubeSearch(link)
                 speak("Enjoy!")
 
