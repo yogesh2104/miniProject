@@ -7,7 +7,10 @@ import webbrowser
 import os
 import random
 import pywhatkit
-
+import pyjokes
+from pytube import YouTube
+import keyboard
+import pyautogui
 
 assistant = pyttsx3.init('sapi5')
 voices = assistant.getProperty('voices')
@@ -60,14 +63,21 @@ def startup():
     speak(f"Currently it is {strTime}")
     speak("I am sophia. Online and ready sir. Please tell me how may I help you")
 
-        
+def screenshot():
+    speak("ok done, tell me the name of file.")
+    f_name= takeCommand()
+    file_name= f_name+".png"
+    path = "C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\screenshot"+file_name
+    pyauto = pyautogui.screenshot()
+    pyauto.save(path)
+    os.startfile("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\screenshot")
+    speak("Here your screenshot")
 if __name__ == "__main__":
     # startup()
     while True:
         try:
             query = takeCommand().lower()
-            # Logic for executing tasks based on query
-            
+            # Logic for executing tasks based on query 
             if "hello" in query:
                 speak("hello sir how can i help.")
             
@@ -195,6 +205,31 @@ if __name__ == "__main__":
                 temperature = data.find("div",class_="BNeawe").text
                 speak(f"Temperature is {temperature}")
                 print(f"Temperature is {temperature}")
+                speak("You want to konw another city temperature?")
+                next = takeCommand()
+                if 'yes' in next:
+                        speak("Tell me the place name")
+                        place_name =takeCommand() 
+                        search=f"Temperature in {place_name}"
+                        url = f"https://www.google.com/search?q={search}"
+                        import requests
+                        from bs4 import BeautifulSoup
+                        r = requests.get(url)
+                        data = BeautifulSoup(r.text,"html.parser")
+                        temperature = data.find("div",class_="BNeawe").text
+                        speak(f"Temperature is {temperature}")
+                        print(f"Temperature is {temperature}")
+                else:
+                    speak("No problem!")
+            
+            elif 'screenshot' in query:
+                screenshot()
+            
+            elif "repeat my word":
+                speak("Ok!")
+                you_say = takeCommand()
+                speak(f"you say: {you_say}")
+
         except Exception as e:
             print(e)
             speak("I cannot recognize ")
