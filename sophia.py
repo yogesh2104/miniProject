@@ -11,6 +11,11 @@ import pyjokes
 from pytube import YouTube
 import keyboard
 import pyautogui
+import requests
+from PIL import Image
+
+
+
 
 assistant = pyttsx3.init('sapi5')
 voices = assistant.getProperty('voices')
@@ -67,11 +72,38 @@ def screenshot():
     speak("ok done, tell me the name of file.")
     f_name= takeCommand()
     file_name= f_name+".png"
-    path = "C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\screenshot"+file_name
+    path = "C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\screenshot\\"+file_name
     pyauto = pyautogui.screenshot()
     pyauto.save(path)
-    os.startfile("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\screenshot")
+    os.startfile("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\screenshot\\"+file_name)
     speak("Here your screenshot")
+
+def nasa_news(Date):
+    speak("Extracting data from nasa")
+    print("Extracting data from nasa")
+    api_key = "ZMGdewvFuBq4SQfZJzCuNtrzqrnaPWkabDahrbpZ"
+    url = "https://api.nasa.gov/planetary/apod?api_key="+str(api_key)
+    Params = {'date':str(Date)}
+    r = requests.get(url,params=Params)
+    Data =r.json()
+    Info = Data['explanation']
+    Title = Data['title']
+    print(Info)
+    print(Title)
+    Img_url = Data['url']
+    Img_r = requests.get(Img_url)
+    file_name = str(Date)+'.jpg'
+    with open(file_name,'wb') as f:
+        f.write(Img_r.content)
+    path1 = "C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\"+str(file_name)
+    path2 = "C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\Photos\\"+str(file_name)
+    os.rename(path1, path2)
+    img = Image.open(path2)
+    img.show()
+    speak(f"Title is:{Title}")
+    speak(f"according to nasa:{Info}")
+
+
 if __name__ == "__main__":
     # startup()
     while True:
@@ -224,12 +256,17 @@ if __name__ == "__main__":
             
             elif 'screenshot' in query:
                 screenshot()
-            
-            elif "repeat my word":
-                speak("Ok!")
-                you_say = takeCommand()
-                speak(f"you say: {you_say}")
-
+       
+            elif 'nasa' in query:
+                speak("Tell me the complete date like year, month, date ")
+                speak("tell me the year")
+                year = takeCommand()
+                speak("Tell me the month like 1,2 like that")
+                month = takeCommand()
+                speak("tell me the date")
+                date = takeCommand()
+                final_date =f"{year}-{month}-{date}"
+                nasa_news(final_date)
         except Exception as e:
             print(e)
             speak("I cannot recognize ")

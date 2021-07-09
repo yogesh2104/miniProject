@@ -1,0 +1,11 @@
+pillow
+pyttsx3
+speech_recognition
+wikipedia
+random
+pywhatkit
+pyjokes
+pytube
+keyboard
+pyautogui
+requests

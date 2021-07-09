@@ -1,0 +1,95 @@
+
+	
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<title>Perseverance's Mastcam-Z First High-Resolution Panorama</title>
+		<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+		<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
+		<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
+		<link href="/manifest.json" rel="manifest" />
+		<meta content="#000000" name="theme-color">
+		<meta name="title" content="Perseverance's Mastcam-Z First High-Resolution Panorama - NASA Mars">
+		<meta property="og:title" content="Perseverance's Mastcam-Z First High-Resolution Panorama - NASA Mars">
+		<meta name="creator" content="mars.nasa.gov">
+		<meta name="author" content="mars.nasa.gov">
+		<meta name="keywords" content="NASA,Mission,Mars,image,photos,panoramic">
+		<meta name="description" content="Stitched together from 79 individual images, this Mastcam-Z right-eye 110-mm zoom mosaic is from the camera's first high-resolution panorama imaging sequence. These images were taken on the afternoon of Sol 4 (Feb. 22, 2021) of the mission; a sol is a Martian day.">
+		<meta property="og:description" content="Share the latest on Perseverance's Mastcam-Z First High-Resolution Panorama." />
+		<meta name="twitter:title" content="Perseverance's Mastcam-Z First High-Resolution Panorama - NASA Mars">
+		<meta name="twitter:description" content="Stitched together from 79 individual images, this Mastcam-Z right-eye 110-mm zoom mosaic is from the camera's first high-resolution panorama imaging sequence. These images were taken on the afternoon of Sol 4 (Feb. 22, 2021) of the mission; a sol is a Martian day.">
+		<meta name="twitter:card" content="summary_large_image">
+		<meta property="og:image" content="https://mars.nasa.gov/system/resources/detail_files/25674_PIA23727_ultrawide-web.jpg" />
+		<meta name="twitter:image" content="https://mars.nasa.gov/system/resources/detail_files/25674_PIA23727_ultrawide-web.jpg">
+		<meta property="og:url" content="https://mars.nasa.gov/resources/25674/perseverances-mastcam-z-first-high-resolution-panorama/" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="google-site-verification" content="24YTv3DMgPjuCosK3yyc8RX9chB0AzhIxGajBBxbwMU" />
+		
+		<script id="_fed_an_js_tag" type="text/javascript" src="/js/federated-analytics.all.min.js?agency=NASA&subagency=JPL-Mars-MEP&pua=UA-9453474-1&sp=searchbox"></script>
+	
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/2.4.0/openseadragon.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700|Raleway:300,400" rel="stylesheet">
+	<style>body,html{margin:0;padding:0;font-family:Montserrat,Helvetica,Arial}#deep-zoom{width:100%;min-height:350px;height:100%;height:100vh;background-color:#000;position:relative;z-index:99}#containerMain{width:100%;margin:0;padding:0;position:relative}#containerMain #toggle-overlay{opacity:0;transition:.5s}#containerMain:hover #toggle-overlay,#toolbarDiv:hover #toggle-overlay{display:inline-block;opacity:1}#toggle-overlay{font-family:inherit;font-size:.8em;background:0 0;cursor:pointer;padding:5px 15px;text-transform:uppercase;letter-spacing:1px;font-weight:600;outline:0;-webkit-transition:all .3s;-moz-transition:all .3s;transition:all .3s;border:2px solid #fff;color:#fff;position:fixed;bottom:35px;left:0;right:0;margin:0 auto;z-index:101}#toggle-overlay:hover{color:gold}.openseadragon-container div[title^=Go],.openseadragon-container div[title^=Toggle],.openseadragon-container div[title^=Zoom],.toolbar div[title^=Go],.toolbar div[title^=Toggle],.toolbar div[title^=Zoom]{margin:6px 0 0 6px!important;cursor:pointer}#toolbarDiv{position:absolute;top:0;z-index:100;width:250px;}.highlight{outline:3px solid rgba(255,255,255,.8);text-align:center}.highlight_label{outline:3px solid rgba(255,255,255,.8);text-align:center;color:#fff}.labelOnly{color:#fff}[id^=overlay-]:after{text-align:left;color:#fff;display:inline-block;padding:10px}[id^=overlay-]:hover:after{padding:0;font-size:1em;position:relative}[id^=overlay-].highlight_label:after{padding:0;font-size:1em;position:relative}@media screen and (max-width:800px){[id^=overlay-]{font-size:.6em}} 
+		</style>
+
+	</head>
+	<body class="pageContent">
+		<div id="containerMain">
+		
+			<div style="bottom:0;left:0;position:absolute;z-index:100;background-color: rgba(85, 85, 85, 0.5);width:100%;">
+
+				<div style="position:relative;z-index:101;float:right;margin-right:0%;margin-top:2px;margin-bottom:2px;">
+							<a href="https://mars.nasa.gov/resources/25674/perseverances-mastcam-z-first-high-resolution-panorama/" style="color:#eee;text-decoration:none;font-weight:normal !important;border:none;display:inline-block;padding-right:8px;padding-right:10px;line-height:16px;" target="_blank"><div style="font-size:16px;margin-left:6px;float:right;font-weight:bold;">+</div><div style="float:left;">Credit:  NASA/JPL-Caltech/ASU/MSSS</div></a>
+						</div>
+				<br clear="all">
+			</div>
+			<div id="deep-zoom"></div>
+			<script type="text/javascript">
+			
+			OpenSeadragon({id:"deep-zoom",prefixUrl:"/imgs/general/zoom/assets/",showNavigator:!0,navigatorPosition:"TOP_RIGHT",defaultZoomLevel:10,tileSources:[{type:"zoomifytileservice",width:93355,height:2127,tilesUrl:"/bin/panos/PIA23727_ultrawide/"}]});
+			
+			</script>
+		</div>
+	</body>
+	</html>
+
+
