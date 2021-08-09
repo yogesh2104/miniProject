@@ -13,15 +13,16 @@ import keyboard
 import pyautogui
 import requests
 from PIL import Image
-from pywikihow import search_wikihow
-import webbrowser as web
+import requests
+from bs4 import BeautifulSoup
+import wolframalpha
 
 
 
 assistant = pyttsx3.init('sapi5')
 voices = assistant.getProperty('voices')
 # print(voices[1].id)
-assistant.setProperty('voice', voices[0].id)
+assistant.setProperty('voice', voices[1].id)
 
 
 def speak(audio):
@@ -46,20 +47,17 @@ def takeCommand():
         print(f"User said: {query}\n")
 
     except Exception as e:  
-        new_func()  
+        print("Say that again please...")  
         return "None"
     return query
-
-def new_func():
-    print("Say that again please...")
 
 
 def startup():
     """[startup] this function will start when the sophia is run every time."""    
-    # speak("Initializing Sophia")
-    # speak("Starting all systems applications")
-    # speak("Installing and checking all drivers")
-    # speak("Checking the internet connection")
+    speak("Initializing Sophia")
+    speak("Starting all systems applications")
+    speak("Installing and checking all drivers")
+    speak("Checking the internet connection")
     speak("All systems have been activated")
     hour = int(datetime.datetime.now().hour)
     if hour>=0 and hour<=12:
@@ -107,23 +105,77 @@ def nasa_news(Date):
     speak(f"Title is:{Title}")
     speak(f"according to nasa:{Info}")
 
+def wolfram(query):
+    api_key ="K93RPX-WWEK9JLAY8"
+    requester = wolframalpha.Client(api_key)
+    requested = requester.query(query)
+    try:
+        Answer = next(requested.results).text
+        return Answer
+    except:
+        print("An string value is not answerable.")
+        speak("An string value is not answerable.")
+
+def calculator(query):
+    term = str(query)
+    term = term.replace('calculate ','')
+    term = term.replace('multiply ','*')
+    term = term.replace('plus ','+')
+    term = term.replace('minus ','-')
+    term = term.replace('divide ','/')
+    term = term.replace('into ','*')
+    term = term.replace('sophia ','')
+    final = str(term)
+    try:
+        result = wolfram(final)
+        print(result)
+        speak(f"Answer is: {result}")
+    except:
+        print("An string value is not answerable.")
+        speak("An string value is not answerable.")
+
+def Temp(query):
+    tmp = str(query)
+    tmp = tmp.replace("sophia ","")
+    tmp = tmp.replace("in ","")
+    tmp = tmp.replace("what is the ","")
+    tmp = tmp.replace("temperature ","")
+    tmp_query = str(tmp)
+    if 'outside' in tmp_query:
+        var1="temperature in Noida"
+        answer=wolfram(var1)
+        print(f"{var1} is {answer}")
+        speak(f"{var1} is {answer}")
+    else:
+        var2="temperature in " + tmp_query
+        ans=wolfram(var2)
+        print(f"{var2} is {ans}") 
+        speak(f"{var2} is {ans}") 
+
+
+
+
 
 if __name__ == "__main__":
-    startup()
+    # startup()
     while True:
         try:
             query = takeCommand().lower()
             # Logic for executing tasks based on query 
             if "hello" in query:
+                print("hello sir how can i help.")
                 speak("hello sir how can i help.")
             
             elif "how are you" in query:
+                print("I am fine sir What about you")
                 speak("I am fine sir What about you")
             
             elif "fine" in query:
+                print("ok, sir")
                 speak("ok, sir")
             
             elif "bye" in query:
+                print("bye sir, you can call me any time")
                 speak("bye sir, you can call me any time")
                 break
 
@@ -137,6 +189,7 @@ if __name__ == "__main__":
                     speak('Searching Wikipedia...')
                     query = query.replace("wikipedia", "")
                     results = wikipedia.summary(query, sentences=2)
+                    print("According to Wikipedia")
                     speak("According to Wikipedia")
                     print(results)
                     speak(results)
@@ -156,6 +209,7 @@ if __name__ == "__main__":
             
             elif 'open ebay' in query:
                 webbrowser.open("https://www.ebay.com")
+                print("opening ebay")
                 speak("opening ebay")
             
             elif "shutdown" in query:
@@ -166,13 +220,14 @@ if __name__ == "__main__":
                 ans_m = " For your information Yogesh, Krishna and Gulsher Develop me!."
                 print(ans_m)
                 speak(ans_m)
+
             elif "who are you" in query or "about you" in query or "your details" in query:
                 about = "I am Sophia. I am computer based program but i can help you lot like a your close friend. Simple try me to give simple command ! I also play video and song from web or online. ok Lets Start "
-                speak(about)
                 print(about)
+                speak(about)
 
             elif "your name" in query or "sweat name" in query:
-                na_me = "Thanks for Asking my name my self ! Sophia."  
+                na_me = "Thanks for Asking my name. well my self ! Sophia."  
                 print(na_me)
                 speak(na_me)
 
@@ -181,11 +236,13 @@ if __name__ == "__main__":
             
             elif 'exit' in query or 'abort' in query or 'stop' in query or 'bye' in query or 'quit' in query :
                 ex_exit = 'I feeling very sweet after meeting with you but you are going! i am very sad'
+                print(ex_exit)
                 speak(ex_exit)
                 exit()    
             
             elif 'open code' in query:
                 code_path = "C:\\Users\\Yogesh Singh\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+                print("Openning VSCODE")
                 speak("Openning VSCODE")
                 os.startfile(code_path)
             
@@ -195,6 +252,7 @@ if __name__ == "__main__":
                 all_song=len(song)
                 import random
                 rand_song = random.randint(0, all_song-1)
+                print(f"Now playing {rand_song}, enjoy beautiful song")
                 os.startfile(os.path.join(music_folder,song[rand_song]))
 
             elif "search on youtube" in query:
@@ -203,12 +261,14 @@ if __name__ == "__main__":
                 link = query.replace("on","")
                 link = query.replace("youtube","")
                 web = f"https://www.youtube.com/results?search_query={link}"
-                pywhatkit.playonyt(web)
+                print("Enjoy!")    
                 speak("Enjoy!")    
+                pywhatkit.playonyt(web)
 
             elif "how to" in query:
                 from pywikihow import search_wikihow
                 import webbrowser as web
+                print("Collecting data from the internet")
                 speak("Collecting data from the internet")
                 link = query.replace('sophia','')
                 link = query.replace('how to','')
@@ -231,37 +291,40 @@ if __name__ == "__main__":
 
             elif 'what you remember' in query:
                 remeber = open("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\data.txt")
+                print(f"You tell me to remember is that {remeber.read()}")
                 speak(f"You tell me to remember is that {remeber.read()}")
 
             elif 'temperature' in query:
-                speak("Tell me the place name")
-                place_name =takeCommand() 
-                search=f"Temperature in {place_name}"
-                url = f"https://www.google.com/search?q={search}"
-                import requests
-                from bs4 import BeautifulSoup
-                r = requests.get(url)
-                data = BeautifulSoup(r.text,"html.parser")
-                temperature = data.find("div",class_="BNeawe").text
-                speak(f"Temperature is {temperature}")
-                print(f"Temperature is {temperature}")
-                speak("You want to konw another city temperature?")
-                next = takeCommand()
-                if 'yes' in next:
-                        speak("Tell me the place name")
-                        place_name =takeCommand() 
-                        search=f"Temperature in {place_name}"
-                        url = f"https://www.google.com/search?q={search}"
-                        import requests
-                        from bs4 import BeautifulSoup
-                        r = requests.get(url)
-                        data = BeautifulSoup(r.text,"html.parser")
-                        temperature = data.find("div",class_="BNeawe").text
-                        speak(f"Temperature is {temperature}")
-                        print(f"Temperature is {temperature}")
-                else:
-                    speak("No problem!")
-            
+                Temp(query)
+                # speak("Tell me the place name")
+                # place_name =takeCommand() 
+                # search=f"Temperature in {place_name}"
+                # url = f"https://www.google.com/search?q={search}"
+                # r = requests.get(url)
+                # data = BeautifulSoup(r.text,"html.parser")
+                # temperature = data.find("div",class_="BNeawe").text
+                # speak(f"Temperature is {temperature}")
+                # print(f"Temperature is {temperature}")
+                # speak("You want to konw another city temperature?")
+                # next = takeCommand()
+                # if 'yes' in next:
+                #         speak("Tell me the place name")
+                #         place_name =takeCommand() 
+                #         search=f"Temperature in {place_name}"
+                #         url = f"https://www.google.com/search?q={search}"
+                #         import requests
+                #         from bs4 import BeautifulSoup
+                #         r = requests.get(url)
+                #         data = BeautifulSoup(r.text,"html.parser")
+                #         temperature = data.find("div",class_="BNeawe").text
+                #         speak(f"Temperature is {temperature}")
+                #         print(f"Temperature is {temperature}")
+                # else:
+                #     speak("No problem!")
+
+            elif 'calculate' in query:
+                calculator(query)
+
             elif 'screenshot' in query:
                 screenshot()
        
@@ -275,6 +338,18 @@ if __name__ == "__main__":
                 date = takeCommand()
                 final_date =f"{year}-{month}-{date}"
                 nasa_news(final_date)
+
+
+            elif 'send email' in query:
+                pass
+
+            elif 'what is' in query:
+                # ser=str(query)
+                # ser=ser.replace('what is ','')
+                # print(ser)
+                result = wolfram(query)
+                print(result)
+                speak(result)
         except Exception as e:
             print(e)
             speak("I cannot recognize ")
