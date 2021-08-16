@@ -16,6 +16,7 @@ from PIL import Image
 import requests
 from bs4 import BeautifulSoup
 import wolframalpha
+import whatsapp
 
 
 
@@ -31,6 +32,8 @@ def speak(audio):
     Args:
         audio ([str]]): [none]
     """    
+    print(f": {audio}")
+    print("     ")
     assistant.say(audio)
     assistant.runAndWait()
 
@@ -144,12 +147,10 @@ def Temp(query):
     if 'outside' in tmp_query:
         var1="temperature in Noida"
         answer=wolfram(var1)
-        print(f"{var1} is {answer}")
         speak(f"{var1} is {answer}")
     else:
         var2="temperature in " + tmp_query
         ans=wolfram(var2)
-        print(f"{var2} is {ans}") 
         speak(f"{var2} is {ans}") 
 
 
@@ -163,38 +164,36 @@ if __name__ == "__main__":
             query = takeCommand().lower()
             # Logic for executing tasks based on query 
             if "hello" in query:
-                print("hello sir how can i help.")
                 speak("hello sir how can i help.")
             
             elif "how are you" in query:
-                print("I am fine sir What about you")
                 speak("I am fine sir What about you")
             
             elif "fine" in query:
-                print("ok, sir")
                 speak("ok, sir")
             
             elif "bye" in query:
-                print("bye sir, you can call me any time")
                 speak("bye sir, you can call me any time")
                 break
 
             elif "time" in query:
                 strTime = datetime.datetime.now().strftime('%H:%M:%S')
-                print(f"Currently it is {strTime}")
                 speak(f"Currently it is {strTime}")
             
             elif 'wikipedia' in query:
                 try:
-                    speak('Searching Wikipedia...')
+                    speak('Searching On Wikipedia...')
                     query = query.replace("wikipedia", "")
                     results = wikipedia.summary(query, sentences=2)
-                    print("According to Wikipedia")
                     speak("According to Wikipedia")
                     print(results)
-                    speak(results)
+                    speak("Can I read This.")
+                    read_or_not=takeCommand()
+                    if 'yes' in read_or_not:
+                        speak(results)
+                    if 'no' in read_or_not:
+                        pass
                 except Exception as e:
-                    print("Can not find result")
                     speak("Can not find result")
             
             elif 'open amazon' in query or 'shop online' in query:
@@ -236,7 +235,6 @@ if __name__ == "__main__":
             
             elif 'exit' in query or 'abort' in query or 'stop' in query or 'bye' in query or 'quit' in query :
                 ex_exit = 'I feeling very sweet after meeting with you but you are going! i am very sad'
-                print(ex_exit)
                 speak(ex_exit)
                 exit()    
             
@@ -260,15 +258,13 @@ if __name__ == "__main__":
                 link = query.replace("search",'')
                 link = query.replace("on","")
                 link = query.replace("youtube","")
-                web = f"https://www.youtube.com/results?search_query={link}"
-                print("Enjoy!")    
-                speak("Enjoy!")    
+                web = f"https://www.youtube.com/results?search_query={link}"   
+                speak("Searching On YouTube")    
                 pywhatkit.playonyt(web)
 
             elif "how to" in query:
                 from pywikihow import search_wikihow
                 import webbrowser as web
-                print("Collecting data from the internet")
                 speak("Collecting data from the internet")
                 link = query.replace('sophia','')
                 link = query.replace('how to','')
@@ -278,7 +274,12 @@ if __name__ == "__main__":
                 how_to = search_wikihow(link,max_result)
                 assert len(how_to) == 1
                 how_to[0].print()
-                speak(how_to[0].summary)
+                speak("Can I read this?")
+                read_or_not=takeCommand()
+                if 'yes' in read_or_not:
+                    speak(how_to[0].summary)
+                if 'no' in read_or_not:
+                    pass
 
             elif 'remember that' in query:
                 speak("What to remember")
@@ -339,17 +340,50 @@ if __name__ == "__main__":
                 final_date =f"{year}-{month}-{date}"
                 nasa_news(final_date)
 
-
-            elif 'send email' in query:
-                pass
+            elif 'joke' in query:
+                list_of_jokes = pyjokes.get_jokes(language="en", category="all")
+                for i in range(0, 4):
+                    speak(list_of_jokes[i])
 
             elif 'what is' in query:
                 # ser=str(query)
                 # ser=ser.replace('what is ','')
                 # print(ser)
                 result = wolfram(query)
-                print(result)
                 speak(result)
+            
+            elif 'whatsapp message' in query:
+                    query = query.replace("sophia","")
+                    query = query.replace("send","")
+                    query = query.replace("whatsapp message","")
+                    query = query.replace("to","")
+                    name = query
+
+                    if 'Krishna Niet' in name:
+                        numb = "7991189657"
+                        speak(f"What's The Message For {name}")
+                        mess = takeCommand()
+                        whatsapp.whatsapp(numb,mess)
+
+                    elif 'Aayan MCA' in name:
+                        numb = "8434998154"
+                        speak(f"What's The Message For {name}")
+                        mess = takeCommand()
+                        whatsapp.whatsapp(numb,mess)
+                    
+                    elif 'Yogesh' in name:
+                        numb = "8850281705"
+                        speak(f"What's The Message For {name}")
+                        mess = takeCommand()
+                        whatsapp.whatsapp(numb,mess)
+
+                    elif 'project group' in  name:
+                        gro = "GRNrmfIs9dYEs4RRybvjUw"
+                        speak(f"What's The Message For {name}")
+                        mess = takeCommand()
+                        whatsapp.Whatspp_Grp(gro,mess)
+
+
         except Exception as e:
             print(e)
             speak("I cannot recognize ")
