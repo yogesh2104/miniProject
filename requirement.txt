@@ -10,9 +10,3 @@ keyboard
 pyautogui
 requests
 wolframalpha
-
-
-
-NEWS,
-ALRAM,
-JOKE,

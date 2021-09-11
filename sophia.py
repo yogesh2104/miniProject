@@ -54,12 +54,11 @@ def takeCommand():
         return "None"
     return query
 
-
 def startup():
     """[startup] this function will start when the sophia is run every time."""    
     speak("Initializing Sophia")
-    speak("Starting all systems applications")
-    speak("Installing and checking all drivers")
+    # speak("Starting all systems applications")
+    # speak("Installing and checking all drivers")
     speak("Checking the internet connection")
     speak("All systems have been activated")
     hour = int(datetime.datetime.now().hour)
@@ -154,11 +153,8 @@ def Temp(query):
         speak(f"{var2} is {ans}") 
 
 
-
-
-
 if __name__ == "__main__":
-    # startup()
+    startup()
     while True:
         try:
             query = takeCommand().lower()
