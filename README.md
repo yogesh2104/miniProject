@@ -12,5 +12,6 @@
 <li>Take screenshot.</li>
 <li>Ask anything from wikipedia</li>
 <li>Open code</li>
+<li>use as calculate</li>
 <li>Ask anything from wiki_how</li>
 </ul>
