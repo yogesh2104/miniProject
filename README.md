@@ -14,4 +14,5 @@
 <li>Open code</li>
 <li>use as calculate</li>
 <li>Ask anything from wiki_how</li>
+<li>Open any website.</li>
 </ul>
