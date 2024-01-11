@@ -17,13 +17,14 @@ import requests
 from bs4 import BeautifulSoup
 import wolframalpha
 import whatsapp
+from englisttohindi.englisttohindi import EngtoHindi
+from googletrans import Translator
+import speedtest as speedtest 
 
 
-
-assistant = pyttsx3.init('sapi5')
+assistant = pyttsx3.init()
 voices = assistant.getProperty('voices')
-# print(voices[1].id)
-assistant.setProperty('voice', voices[1].id)
+assistant.setProperty('voice', voices[0].id)
 
 
 def speak(audio):
@@ -56,21 +57,57 @@ def takeCommand():
 
 def startup():
     """[startup] this function will start when the sophia is run every time."""    
-    speak("Initializing Sophia")
+    # speak("Initializing Sophia")
     # speak("Starting all systems applications")
     # speak("Installing and checking all drivers")
-    speak("Checking the internet connection")
+    # speak("Checking the internet connection")
     speak("All systems have been activated")
     hour = int(datetime.datetime.now().hour)
-    if hour>=0 and hour<=12:
-        speak("Good Morning")
-    elif hour>12 and hour<18:
-        speak("Good afternoon")
-    else:
-        speak("Good evening")
-    strTime = datetime.datetime.now().strftime('%H:%M:%S')
-    speak(f"Currently it is {strTime}")
-    speak("I am sophia. Online and ready sir. Please tell me how may I help you")
+    # if hour>=0 and hour<=12:
+    #     speak("Good Morning")
+    # elif hour>12 and hour<18:
+    #     speak("Good afternoon")
+    # else:
+    #     speak("Good evening")
+    # strTime = datetime.datetime.now().strftime('%H:%M:%S')
+    # speak(f"Currently it is {strTime}")
+    # speak("I am sophia. Online and ready sir. Please tell me how may I help you")
+
+def TalkInHindi():
+    command = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening.....")
+        command.pause_threshold=1
+        audio=command.listen(source)
+
+        try:
+            print("Recognizing.....")
+            query=command.recognize_google(audio,language='hi')
+            print(f"App ke kaha : {query}")
+
+        except:
+            return "none"
+        return query.lower()
+
+def trans():
+    line=TalkInHindi()
+    translate=Translator()
+    result = translate.translate(line)
+    Text = result.text
+    return Text
+
+def SpeedTest():
+    speed = speedtest.Speedtest()
+    upload = speed.upload()
+    correct_Up = int(int(upload)/800000)
+    download = speed.download()
+    correct_down = int(int(download)/800000)
+    return f'''
+    Uploading Speed : {correct_Up} .
+    Downloading Speed : {correct_down}.
+    '''
+
+
 
 def screenshot():
     speak("ok done, tell me the name of file.")
@@ -153,6 +190,7 @@ def Temp(query):
         speak(f"{var2} is {ans}") 
 
 
+
 if __name__ == "__main__":
     startup()
     while True:
@@ -180,15 +218,19 @@ if __name__ == "__main__":
                 try:
                     speak('Searching On Wikipedia...')
                     query = query.replace("wikipedia", "")
-                    results = wikipedia.summary(query, sentences=2)
+                    results = wikipedia.summary(query, sentences=4)
                     speak("According to Wikipedia")
-                    print(results)
-                    speak("Can I read This.")
-                    read_or_not=takeCommand()
-                    if 'yes' in read_or_not:
-                        speak(results)
-                    if 'no' in read_or_not:
-                        pass
+                    # print(results)
+                    speak(results)
+
+                    # read_or_not=trans()
+                    # print(read_or_not,"Please")
+                    # if 'yes' in read_or_not:
+                    #     speak(results)
+                    # if 'no' in read_or_not:
+                    #     pass
+
+                    
                 except Exception as e:
                     speak("Can not find result")
             
@@ -196,6 +238,10 @@ if __name__ == "__main__":
                 webbrowser.open("https://www.amazon.com")
                 print("opening amazon")
                 speak("opening amazon")
+
+            elif 'speed test' in query :
+                res=SpeedTest()
+                speak(res)
             
             elif 'open flipkart' in query:
                 webbrowser.open("https://www.flipkart.com")
@@ -270,24 +316,26 @@ if __name__ == "__main__":
                 how_to = search_wikihow(link,max_result)
                 assert len(how_to) == 1
                 how_to[0].print()
-                speak("Can I read this?")
-                read_or_not=takeCommand()
-                if 'yes' in read_or_not:
-                    speak(how_to[0].summary)
-                if 'no' in read_or_not:
-                    pass
+                speak(how_to[0].summary)
+                # speak("Can I read this?")
+
+                # read_or_not=takeCommand()
+                # if 'yes' in read_or_not:
+                #     speak(how_to[0].summary)
+                # if 'no' in read_or_not:
+                #     pass
 
             elif 'remember that' in query:
                 speak("What to remember")
                 rememberMsg =takeCommand()
                 # speak("You tell me to remind you that" + rememberMsg)
-                remeber = open("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\data.txt",'w')
+                remeber = open("D:\\miniProject\\Database\\data.txt",'w')
                 remeber.write(rememberMsg)
                 remeber.close()
                 speak("Done")
 
             elif 'what you remember' in query:
-                remeber = open("C:\\Users\\Yogesh Singh\\Documents\\GitHub\\miniProject\\Database\\data.txt")
+                remeber = open("D:\\miniProject\\Database\\data.txt")
                 print(f"You tell me to remember is that {remeber.read()}")
                 speak(f"You tell me to remember is that {remeber.read()}")
 
@@ -338,8 +386,12 @@ if __name__ == "__main__":
 
             elif 'joke' in query:
                 list_of_jokes = pyjokes.get_jokes(language="en", category="all")
+                print(list_of_jokes)
+               
                 for i in range(0, 4):
-                    speak(list_of_jokes[i])
+                    trans = EngtoHindi(message=list_of_jokes[i])
+                    speak(trans.convert)
+                    # speak(list_of_jokes[i])
 
             elif 'what is' in query:
                 # ser=str(query)

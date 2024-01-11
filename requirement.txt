@@ -1,6 +1,6 @@
 pillow
 pyttsx3
-speech_recognition
+SpeechRecognition
 wikipedia
 random
 pywhatkit
